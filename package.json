@@ -1,0 +1,9 @@
+{
+  "name": "bridgemutual-package",
+  "version": "0.0.1",
+  "main": "index.js",
+  "author": "",
+  "dependencies": {
+    "bignumber.js": "^9.0.1"
+  }
+}
