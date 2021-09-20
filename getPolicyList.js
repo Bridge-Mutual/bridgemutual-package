@@ -71,7 +71,7 @@ export async function buyPolicy(id, web3, weeks, amount, userAddress) {
  */
 async function getPolicyBooks(web3) {
     let contract = new web3.web3.eth.Contract(
-        CotractRegistrsAbi,
+        ContractRegistryAbi,
         CONTRACT_REGISTRY_PROXY_ADDRESS_TEST
     );
     return new web3.web3.eth.Contract(PolicyBookRegistryContractAbi,
