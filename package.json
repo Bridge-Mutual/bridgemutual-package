@@ -1,9 +1,25 @@
 {
-  "name": "bridgemutual-package",
+  "name": "bridgemutual",
   "version": "0.0.1",
   "main": "index.js",
-  "author": "",
+  "author": "bridgemutual",
   "dependencies": {
     "bignumber.js": "^9.0.1"
-  }
+  },
+  "description": "# Web 3 Integration important",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bridge-Mutual/bridgemutual-package.git"
+  },
+  "keywords": [
+    "bridgemutual"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Bridge-Mutual/bridgemutual-package/issues"
+  },
+  "homepage": "https://github.com/Bridge-Mutual/bridgemutual-package#readme"
 }
