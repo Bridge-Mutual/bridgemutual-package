@@ -1,4 +1,4 @@
-# bridgemutual-package
+# bridgemutual-sdk
 
 Only for Rinkeby TestNet
 

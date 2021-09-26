@@ -1,6 +1,6 @@
 {
   "name": "bridgemutual",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "main": "index.js",
   "author": "bridgemutual",
   "dependencies": {
@@ -15,7 +15,8 @@
     "url": "git+https://github.com/Bridge-Mutual/bridgemutual-package.git"
   },
   "keywords": [
-    "bridgemutual"
+    "bridgemutual",
+    "bridgemutual-sdk"
   ],
   "license": "MIT",
   "bugs": {
