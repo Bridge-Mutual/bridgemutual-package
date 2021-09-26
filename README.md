@@ -2,12 +2,14 @@
 
 Only for Rinkeby TestNet
 
+ * async function
  * Get whitelisted policy list - async function
  * @param {Object} web3 - instance of web3
  * @returns {Object} List of whitelisted polices
  
-  _getWhitelistedContracts(web3);
+ _getWhitelistedContracts(web3);
 
+ * async function
  * Buy policy - async function
  * @param {Number} id - Id of policy
  * @param {Object} web3 - instance of web3
@@ -17,6 +19,34 @@ Only for Rinkeby TestNet
  * @returns void
 
  buyPolicy(id, web3, weeks, amount, userAddress);
+ 
+ * async function
+ * Provide coverage to whitelisted contract
+ * @param {Number} id - Id of contract
+ * @param {Object} web3 - instance of web3
+ * @param {Number} amount - coverage amount
+ * @param {Number} userAddress - userAddress from web3
+ * @returns void
+
+ provideCoverage (id, web3, amount, userAddress);
+ 
+ * async function
+ * Request to receive reward (you can receive reward after 8 days)
+ * @param {Number} id - Id of contract
+ * @param {Object} web3 - instance of web3
+ * @param {Number} userAddress - userAddress from web3
+ * @returns void
+  
+ unStake(id, web3, userAddress)
+ 
+ * async function
+ * Request to receive liquidity (you can receive reward after 8 days)
+ * @param {Number} id - Id of contract
+ * @param {Object} web3 - instance of web3
+ * @param {Number} userAddress - userAddress from web3
+ * @returns void
+ 
+ withdrawLiquidity(id, web3, userAddress)
  
  # Example
  import {buyPolicy, _getWhitelistedContracts} from 'bridgemutual';
