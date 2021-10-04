@@ -26,44 +26,69 @@ export async function _getWhitelistedContracts(web3) {
 
 /**
  * async function
- * Buy policy
+ * Get Approve
  * @param {Number} id - Id of policy
  * @param {Object} web3 - instance of web3
  * @param {Number} weeks - period of policy
  * @param {Number} amount - amount of policy
  * @param {String} userAddress - user address (in ETH)
- * @returns void
+ * @returns contract
  */
 
-export async function buyPolicy(id, web3, weeks, amount, userAddress) {
+export async function getApprove(id, web3, weeks, amount, userAddress) {
     let contract = new web3.eth.Contract(
         PolicyBookContractAbi,
         id
     );
-    contract.methods.getPolicyPrice(weeks, amount).call().then(res => {
-        getUSDTContract(web3).then(usdtContract => {
-            usdtContract.methods.allowance(userAddress, id).call().then(allowance => {
+    const bigNumberAmount = BigNumber(amount).times(BigNumber(10).pow(18)).toFixed();
+    return contract.methods.getPolicyPrice(weeks, bigNumberAmount).call().then(res => {
+        return getUSDTContract(web3).then(usdtContract => {
+            return usdtContract.methods.allowance(userAddress, id).call().then(allowance => {
 
                 if (BigNumber(allowance).lt(BigNumber(res.totalPrice).idiv(10^12))) {
                     if (allowance === 0) {
-                        usdtContract.methods.approve(id, BigNumber(res.totalPrice).idiv(10^12).toFixed()).send({from: userAddress}).then(() => {
-                            contract.methods.buyPolicy(weeks, amount).send({from: userAddress}).then()
+                        return usdtContract.methods.approve(id, BigNumber(res.totalPrice).idiv(10^12).toFixed()).send({from: userAddress}).then(() => {
+                            //tt
+                            return contract;
+                            // contract.methods.buyPolicy(weeks, bigNumberAmount).send({from: userAddress}).then()
                         })
                     } else {
-                        usdtContract.methods.approve(id, 0).send({from: userAddress}).then(() => {
-                            usdtContract.methods.approve(id, BigNumber(res.totalPrice).idiv(10^12).toFixed()).send({from: userAddress}).then(() => {
-                                contract.methods.buyPolicy(weeks, amount).send({from: userAddress}).then()
+                        return usdtContract.methods.approve(id, 0).send({from: userAddress}).then(() => {
+                            return usdtContract.methods.approve(id, BigNumber(res.totalPrice).idiv(10^12).toFixed()).send({from: userAddress}).then(() => {
+                                //tt
+                                return contract;
+                                // contract.methods.buyPolicy(weeks, bigNumberAmount).send({from: userAddress}).then()
                             })
                         })
                     }
-                } else {
-                    contract.methods.buyPolicy(weeks, amount).send({from: userAddress}).then()
+                }
+                else {
+                    return contract;
+                    // contract.methods.buyPolicy(weeks, bigNumberAmount).send({from: userAddress}).then()
                 }
             })
         })
 
     })
 }
+
+/**
+ * async function
+ * Policy Purchase
+ * @param {Object} contract - instance of contract after buyPolicy method
+ * @param {String} userAddress - user address (in ETH)
+ * @param {Number} weeks - period of policy
+ * @param {Number} amount - amount of policy
+ * @returns policy purchase result
+ */
+
+export async function policyPurchase (contract, userAddress, weeks, amount) {
+    const bigNumberAmount = BigNumber(amount).times(BigNumber(10).pow(18)).toFixed();
+    return contract.methods.buyPolicy(weeks, bigNumberAmount).send({from: userAddress}).then((res) => {
+        return res
+    })
+}
+
 
 /**
  * async function
@@ -117,6 +142,7 @@ export async function provideCoverage (id, web3, amount, userAddress) {
             if (BigNumber(allowance).lt(BigNumber(bigNumberAmount).idiv(10^12))) {
                 if (allowance === 0) {
                     usdtContract.methods.approve(id, BigNumber(bigNumberAmount).idiv(10^12).toFixed()).send({from: userAddress}).then(() => {
+                        //tt
                         contract.methods.convertSTBLToBMIX(bigNumberAmount).call().then((BMIxAmount) => {
                             contract.methods.allowance(userAddress, BMIContractStakingTestNet).call().then((allowance) => {
                                 if (BigNumber(allowance).lt(BMIxAmount)) {
@@ -132,6 +158,7 @@ export async function provideCoverage (id, web3, amount, userAddress) {
                     })
                 } else {
                     usdtContract.methods.approve(id, 0).send({from: userAddress}).then(() => {
+                        //tt
                         usdtContract.methods.approve(id, BigNumber(bigNumberAmount).idiv(10^12).toFixed()).send({from: userAddress}).then(() => {
                             contract.methods.convertSTBLToBMIX(bigNumberAmount).call().then((BMIxAmount) => {
                                 contract.methods.allowance(userAddress, BMIContractStakingTestNet).call().then((allowance) => {

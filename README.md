@@ -10,15 +10,25 @@ Only for Rinkeby TestNet
  _getWhitelistedContracts(web3);
 
  * async function
- * Buy policy - async function
+ * Get Approve - async function
  * @param {Number} id - Id of policy
  * @param {Object} web3 - instance of web3
  * @param {Number} weeks - period of policy
  * @param {Number} amount - amount of policy
  * @param {String} userAddress - user address (in ETH)
- * @returns void
+ * @returns contract
 
- buyPolicy(id, web3, weeks, amount, userAddress);
+ getApprove(id, web3, weeks, amount, userAddress);
+ 
+ * async function
+ * Policy Purchase
+ * @param {Object} contract - instance of contract after buyPolicy method
+ * @param {String} userAddress - user address (in ETH)
+ * @param {Number} weeks - period of policy
+ * @param {Number} amount - amount of policy
+ * @returns policy purchase result
+
+ policyPurchase (id, web3, amount, userAddress);
  
  * async function
  * Provide coverage to whitelisted contract
