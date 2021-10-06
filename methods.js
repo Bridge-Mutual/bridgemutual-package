@@ -3,6 +3,7 @@ import PolicyBookRegistryContractAbi from './contartsABI/PolicyBookRegistryContr
 import PolicyBookContractAbi from './contartsABI/PolicyBookContractAbi.json'
 import USDTContractAbi from './contartsABI/USDTContractAbi.json'
 const CONTRACT_REGISTRY_PROXY_ADDRESS_TEST = '0x88240185a74F020B94b14FAe3e6d5DdE1AA9057b';
+import PolicyRegistryAbi from './contartsABI/PolicyRegistry.json'
 import BigNumber from 'bignumber.js';
 
 /**
@@ -235,4 +236,29 @@ export async function withdrawLiquidity(id, web3, userAddress) {
         id
     );
     contract.methods.withdrawLiquidity().send({from: userAddress}).then();
+}
+
+/**
+ * Get purchased insurance
+ * @param {Object} web3 - instance of web3
+ * @param {String} userAddress - user address (in ETH)
+ * @param {Boolean} active - active/unactive policies
+ * @param {Number} offset - offset
+ * @param {Number} limit - limit
+ * @returns list purchased policies
+ */
+
+export async function getPurchasedPolicies(web3, userAddress, active, offset, limit) {
+    let contract = new web3.eth.Contract(
+        ContractRegistryAbi,
+        CONTRACT_REGISTRY_PROXY_ADDRESS_TEST
+    );
+    return contract.methods.getPolicyRegistryContract().call().then(res => {
+        if (res) {
+            let registryContract = new web3.eth.Contract(PolicyRegistryAbi, res);
+            return registryContract.methods.getPoliciesInfo(userAddress, active, offset, limit).call({from: userAddress}).then( (info) => {
+                return info
+            })
+        }
+    })
 }

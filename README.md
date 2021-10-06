@@ -40,23 +40,15 @@ Only for Rinkeby TestNet
 
  provideCoverage (id, web3, amount, userAddress);
  
- * async function
- * Request to receive reward (you can receive reward after 8 days)
- * @param {Number} id - Id of contract
+ * Get purchased insurance
  * @param {Object} web3 - instance of web3
- * @param {Number} userAddress - userAddress from web3
- * @returns void
-  
- unStake(id, web3, userAddress)
- 
- * async function
- * Request to receive liquidity (you can receive reward after 8 days)
- * @param {Number} id - Id of contract
- * @param {Object} web3 - instance of web3
- * @param {Number} userAddress - userAddress from web3
- * @returns void
- 
- withdrawLiquidity(id, web3, userAddress)
+ * @param {String} userAddress - user address (in ETH)
+ * @param {Boolean} active - active/unactive policies
+ * @param {Number} offset - offset
+ * @param {Number} limit - limit
+ * @returns list purchased policies
+
+ getPurchasedPolicies (web3, userAddress, active, offset, limit);
  
  # Example
  import {buyPolicy, _getWhitelistedContracts} from 'bridgemutual';

@@ -1,9 +1,13 @@
-import {_getWhitelistedContracts, getApprove, provideCoverage, unStake, withdrawLiquidity, policyPurchase} from './getPolicyList'
+import {
+  _getWhitelistedContracts,
+  getApprove,
+  policyPurchase,
+  provideCoverage,
+  getPurchasedPolicies} from './methods'
 export {
   _getWhitelistedContracts,
   getApprove,
   policyPurchase,
   provideCoverage,
-  unStake,
-  withdrawLiquidity
+  getPurchasedPolicies
 }
