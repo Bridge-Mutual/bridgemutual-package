@@ -31,14 +31,23 @@ Only for Rinkeby TestNet
  policyPurchase (contract, userAddress, weeks, amount);
  
  * async function
- * Provide coverage to whitelisted contract
- * @param {Number} id - Id of contract
+ * Get Approve
+ * @param {Number} id - Id of policy
  * @param {Object} web3 - instance of web3
- * @param {Number} amount - coverage amount
- * @param {Number} userAddress - userAddress from web3
- * @returns void
+ * @param {Number} amount - amount of coverage
+ * @param {String} userAddress - user address (in ETH)
+ * @returns contract
 
- provideCoverage (id, web3, amount, userAddress);
+ getCoverageApprove (id, web3, amount, userAddress);
+ 
+ * async function
+ * Policy Purchase
+ * @param {Object} contract - instance of contract after buyPolicy method
+ * @param {String} userAddress - user address (in ETH)
+ * @param {Number} amount - amount of coverage
+ * @returns policy purchase result
+
+ provideCoverage (contract, userAddress, amount);
  
  * Get purchased insurance
  * @param {Object} web3 - instance of web3

@@ -128,12 +128,11 @@ async function getUSDTContract(web3) {
 
 /**
  * async function
- * Provide coverage to whitelisted contract
- * @param {Number} id - Id of contract
- * @param {Object} web3 - instance of web3
- * @param {Number} amount - coverage amount
- * @param {Number} userAddress - userAddress from web3
- * @returns void
+ * Policy Purchase
+ * @param {Object} contract - instance of contract after buyPolicy method
+ * @param {String} userAddress - user address (in ETH)
+ * @param {Number} amount - amount of coverage
+ * @returns policy purchase result
  */
 export async function provideCoverage(contract, userAddress, amount) {
     const bigNumberAmount = BigNumber(amount).times(BigNumber(10).pow(18)).toFixed();
@@ -154,6 +153,17 @@ export async function provideCoverage(contract, userAddress, amount) {
 
     })
 }
+
+/**
+ * async function
+ * Get Approve
+ * @param {Number} id - Id of policy
+ * @param {Object} web3 - instance of web3
+ * @param {Number} amount - amount of coverage
+ * @param {String} userAddress - user address (in ETH)
+ * @returns contract
+ */
+
 export async function getCoverageApprove (id, web3, amount, userAddress) {
     let contract = new web3.eth.Contract(
         PolicyBookContractAbi,
