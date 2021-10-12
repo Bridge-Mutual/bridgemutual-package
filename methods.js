@@ -6,6 +6,8 @@ const CONTRACT_REGISTRY_PROXY_ADDRESS_TEST = '0x88240185a74F020B94b14FAe3e6d5DdE
 import PolicyRegistryAbi from './contartsABI/PolicyRegistry.json'
 import BigNumber from 'bignumber.js';
 
+const BMIContractStakingMainNet = '0x6771Fd8968488Eb590Dff1730FE099c0eFA415bF';
+const BMIContractStakingTestNet = '0x3a9956d5a362ed9e59f064b8bf3cf20b51fa8be2';
 /**
  * async function
  * Get whitelisted policy list
