@@ -133,7 +133,7 @@ async function getUSDTContract(web3) {
  * @param {Number} userAddress - userAddress from web3
  * @returns void
  */
-export async function provideCoverage(contract, userAddress, weeks, amount) {
+export async function provideCoverage(contract, userAddress, amount) {
     const bigNumberAmount = BigNumber(amount).times(BigNumber(10).pow(18)).toFixed();
     return contract.methods.convertSTBLToBMIX(bigNumberAmount).call().then((BMIxAmount) => {
         return contract.methods.allowance(userAddress, BMIContractStakingTestNet).call().then((allowance) => {
@@ -152,33 +152,33 @@ export async function provideCoverage(contract, userAddress, weeks, amount) {
 
     })
 }
-// export async function provideCoverage (id, web3, amount, userAddress) {
-//     let contract = new web3.eth.Contract(
-//         PolicyBookContractAbi,
-//         id
-//     );
-//
-//     const bigNumberAmount = BigNumber(amount).times(BigNumber(10).pow(18)).toFixed();
-//     return getUSDTContract(web3).then(usdtContract => {
-//         return usdtContract.methods.allowance(userAddress, id).call().then(allowance => {
-//             if (BigNumber(allowance).lt(BigNumber(bigNumberAmount).idiv(10^12))) {
-//                 if (allowance === 0) {
-//                     return usdtContract.methods.approve(id, BigNumber(bigNumberAmount).idiv(10^12).toFixed()).send({from: userAddress}).then(() => {
-//                         return contract
-//                     })
-//                 } else {
-//                     return usdtContract.methods.approve(id, 0).send({from: userAddress}).then(() => {
-//                         return usdtContract.methods.approve(id, BigNumber(bigNumberAmount).idiv(10^12).toFixed()).send({from: userAddress}).then(() => {
-//                             return contract
-//                         })
-//                     })
-//                 }
-//             } else {
-//                 return contract
-//             }
-//         })
-//     })
-// }
+export async function getCoverageApprove (id, web3, amount, userAddress) {
+    let contract = new web3.eth.Contract(
+        PolicyBookContractAbi,
+        id
+    );
+
+    const bigNumberAmount = BigNumber(amount).times(BigNumber(10).pow(18)).toFixed();
+    return getUSDTContract(web3).then(usdtContract => {
+        return usdtContract.methods.allowance(userAddress, id).call().then(allowance => {
+            if (BigNumber(allowance).lt(BigNumber(bigNumberAmount).idiv(10^12))) {
+                if (allowance === 0) {
+                    return usdtContract.methods.approve(id, BigNumber(bigNumberAmount).idiv(10^12).toFixed()).send({from: userAddress}).then(() => {
+                        return contract
+                    })
+                } else {
+                    return usdtContract.methods.approve(id, 0).send({from: userAddress}).then(() => {
+                        return usdtContract.methods.approve(id, BigNumber(bigNumberAmount).idiv(10^12).toFixed()).send({from: userAddress}).then(() => {
+                            return contract
+                        })
+                    })
+                }
+            } else {
+                return contract
+            }
+        })
+    })
+}
 
 /**
  * async function
