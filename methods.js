@@ -121,6 +121,9 @@ async function getUSDTContract(web3) {
         await contract.methods.getUSDTContract().call());
 }
 
+
+
+
 /**
  * async function
  * Provide coverage to whitelisted contract
@@ -130,67 +133,52 @@ async function getUSDTContract(web3) {
  * @param {Number} userAddress - userAddress from web3
  * @returns void
  */
-
-export async function provideCoverage (id, web3, amount, userAddress) {
-    let contract = new web3.eth.Contract(
-        PolicyBookContractAbi,
-        id
-    );
-
+export async function provideCoverage(contract, userAddress, weeks, amount) {
     const bigNumberAmount = BigNumber(amount).times(BigNumber(10).pow(18)).toFixed();
-    getUSDTContract(web3).then(usdtContract => {
-        usdtContract.methods.allowance(userAddress, id).call().then(allowance => {
-            if (BigNumber(allowance).lt(BigNumber(bigNumberAmount).idiv(10^12))) {
-                if (allowance === 0) {
-                    usdtContract.methods.approve(id, BigNumber(bigNumberAmount).idiv(10^12).toFixed()).send({from: userAddress}).then(() => {
-                        //tt
-                        contract.methods.convertSTBLToBMIX(bigNumberAmount).call().then((BMIxAmount) => {
-                            contract.methods.allowance(userAddress, BMIContractStakingTestNet).call().then((allowance) => {
-                                if (BigNumber(allowance).lt(BMIxAmount)) {
-                                    contract.methods.approve(BMIContractStakingTestNet, BMIxAmount).send({from: userAddress}).then(() => {
-                                        contract.methods.addLiquidityAndStake(bigNumberAmount, bigNumberAmount).send({from: userAddress}).then();
-                                    })
-                                } else {
-                                    contract.methods.addLiquidityAndStake(bigNumberAmount, bigNumberAmount).send({from: userAddress}).then();
-                                }
-                            })
-
-                        })
-                    })
-                } else {
-                    usdtContract.methods.approve(id, 0).send({from: userAddress}).then(() => {
-                        //tt
-                        usdtContract.methods.approve(id, BigNumber(bigNumberAmount).idiv(10^12).toFixed()).send({from: userAddress}).then(() => {
-                            contract.methods.convertSTBLToBMIX(bigNumberAmount).call().then((BMIxAmount) => {
-                                contract.methods.allowance(userAddress, BMIContractStakingTestNet).call().then((allowance) => {
-                                    if (BigNumber(allowance).lt(BMIxAmount)) {
-                                        contract.methods.approve(BMIContractStakingTestNet, BMIxAmount).send({from: userAddress}).then(() => {
-                                            contract.methods.addLiquidityAndStake(bigNumberAmount, bigNumberAmount).send({from: userAddress}).then()
-                                        })
-                                    } else {
-                                        contract.methods.addLiquidityAndStake(bigNumberAmount, bigNumberAmount).send({from: userAddress}).then();
-                                    }
-                                })
-                            })
-                        })
-                    })
-                }
-            } else {
-                contract.methods.convertSTBLToBMIX(bigNumberAmount).call().then((BMIxAmount) => {
-                    contract.methods.allowance(userAddress, BMIContractStakingTestNet).call().then((allowance) => {
-                        if (BigNumber(allowance).lt(BMIxAmount)) {
-                            contract.methods.approve(BMIContractStakingTestNet, BMIxAmount).send({from: userAddress}).then(() => {
-                                contract.methods.addLiquidityAndStake(bigNumberAmount, bigNumberAmount).send({from: userAddress}).then();
-                            })
-                        } else {
-                            contract.methods.addLiquidityAndStake(bigNumberAmount, bigNumberAmount).send({from: userAddress}).then();
-                        }
-                    })
+    return contract.methods.convertSTBLToBMIX(bigNumberAmount).call().then((BMIxAmount) => {
+        return contract.methods.allowance(userAddress, BMIContractStakingTestNet).call().then((allowance) => {
+            if (BigNumber(allowance).lt(BMIxAmount)) {
+                return contract.methods.approve(BMIContractStakingTestNet, BMIxAmount).send({from: userAddress}).then(() => {
+                    return contract.methods.addLiquidityAndStake(bigNumberAmount, bigNumberAmount).send({from: userAddress}).then(result => {
+                        return result
+                    });
                 })
+            } else {
+                return contract.methods.addLiquidityAndStake(bigNumberAmount, bigNumberAmount).send({from: userAddress}).then(result => {
+                    return result
+                });
             }
         })
+
     })
 }
+// export async function provideCoverage (id, web3, amount, userAddress) {
+//     let contract = new web3.eth.Contract(
+//         PolicyBookContractAbi,
+//         id
+//     );
+//
+//     const bigNumberAmount = BigNumber(amount).times(BigNumber(10).pow(18)).toFixed();
+//     return getUSDTContract(web3).then(usdtContract => {
+//         return usdtContract.methods.allowance(userAddress, id).call().then(allowance => {
+//             if (BigNumber(allowance).lt(BigNumber(bigNumberAmount).idiv(10^12))) {
+//                 if (allowance === 0) {
+//                     return usdtContract.methods.approve(id, BigNumber(bigNumberAmount).idiv(10^12).toFixed()).send({from: userAddress}).then(() => {
+//                         return contract
+//                     })
+//                 } else {
+//                     return usdtContract.methods.approve(id, 0).send({from: userAddress}).then(() => {
+//                         return usdtContract.methods.approve(id, BigNumber(bigNumberAmount).idiv(10^12).toFixed()).send({from: userAddress}).then(() => {
+//                             return contract
+//                         })
+//                     })
+//                 }
+//             } else {
+//                 return contract
+//             }
+//         })
+//     })
+// }
 
 /**
  * async function

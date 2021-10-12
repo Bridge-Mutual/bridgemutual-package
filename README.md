@@ -28,7 +28,7 @@ Only for Rinkeby TestNet
  * @param {Number} amount - amount of policy
  * @returns policy purchase result
 
- policyPurchase (id, web3, amount, userAddress);
+ policyPurchase (contract, userAddress, weeks, amount);
  
  * async function
  * Provide coverage to whitelisted contract
