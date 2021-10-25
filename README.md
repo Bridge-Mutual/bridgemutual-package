@@ -1,13 +1,12 @@
 # bridgemutual-sdk
 
-Only for Rinkeby TestNet
-
  * async function
  * Get whitelisted policy list - async function
  * @param {Object} web3 - instance of web3
+ * @param {Boolean} isTest - for use Rinkeby TestNet
  * @returns {Object} List of whitelisted polices
  
- _getWhitelistedContracts(web3);
+ _getWhitelistedContracts(web3, isTest);
 
  * async function
  * Get Approve - async function
@@ -18,7 +17,7 @@ Only for Rinkeby TestNet
  * @param {String} userAddress - user address (in ETH)
  * @returns contract
 
- getApprove(id, web3, weeks, amount, userAddress);
+ getApprove(id, web3, weeks, amount, userAddress, isTest);
  
  * async function
  * Policy Purchase
@@ -26,9 +25,10 @@ Only for Rinkeby TestNet
  * @param {String} userAddress - user address (in ETH)
  * @param {Number} weeks - period of policy
  * @param {Number} amount - amount of policy
+ * @param {String} referralAddress - referral of Address
  * @returns policy purchase result
 
- policyPurchase (contract, userAddress, weeks, amount);
+ policyPurchase (contract, userAddress, weeks, amount, referralAddress);
  
  * async function
  * Get Approve
@@ -36,9 +36,10 @@ Only for Rinkeby TestNet
  * @param {Object} web3 - instance of web3
  * @param {Number} amount - amount of coverage
  * @param {String} userAddress - user address (in ETH)
+ * @param {Boolean} isTest - for use Rinkeby TestNet
  * @returns contract
 
- getCoverageApprove (id, web3, amount, userAddress);
+ getCoverageApprove (id, web3, amount, userAddress, isTest);
  
  * async function
  * Policy Purchase
@@ -55,9 +56,10 @@ Only for Rinkeby TestNet
  * @param {Boolean} active - active/unactive policies
  * @param {Number} offset - offset
  * @param {Number} limit - limit
+ * @param {Boolean} isTest - for use Rinkeby TestNet
  * @returns list purchased policies
 
- getPurchasedPolicies (web3, userAddress, active, offset, limit);
+ getPurchasedPolicies (web3, userAddress, active, offset, limit, isTest);
  
  # Example
  import {buyPolicy, _getWhitelistedContracts} from 'bridgemutual';
