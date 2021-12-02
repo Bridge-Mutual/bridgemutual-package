@@ -1,10 +1,12 @@
 import ContractRegistryAbi from './contartsABI/ContractRegistryAbi.json'
 import PolicyBookRegistryContractAbi from './contartsABI/PolicyBookRegistryContractAbi.json'
 import PolicyBookFascade from './contartsABI/PolicyBookFascade.json'
+import PolicyBook from './contartsABI/PolicyBook.json'
 import PolicyBookContractAbi from './contartsABI/PolicyBookContractAbi.json'
 import USDTContractAbi from './contartsABI/USDTContractAbi.json'
 const CONTRACT_REGISTRY_PROXY_ADDRESS_TEST = '0xD36973F7d97660fa69c8A3daCC037a7568a69EbB';
 const CONTRACT_REGISTRY_PROXY_ADDRESS_MAIN = '0x88240185a74F020B94b14FAe3e6d5DdE1AA9057b';
+const CONTRACT_POLICY_BOOK_ADDRESS_TEST = '0xA494E39f08540c9db0f347DE9C85ff2eA71e09F7';
 import PolicyRegistryAbi from './contartsABI/PolicyRegistry.json'
 import BigNumber from 'bignumber.js';
 
@@ -20,13 +22,13 @@ const BMIContractStakingTestNet = '0x3a9956d5a362ed9e59f064b8bf3cf20b51fa8be2';
 export async function _getWhitelistedContracts(web3, isTest) {
     return getPolicyBooks(web3, isTest).then((contract) => {
         return contract.methods.count().call().then((count =>
+        {
+            return contract.methods.listWithStatsWhitelisted(0, count).call().then((listOfPolicies =>
             {
-                return contract.methods.listWithStatsWhitelisted(0, count).call().then((listOfPolicies =>
-                {
-                    return listOfPolicies;
-                }))
+                return listOfPolicies;
             }))
-        });
+        }))
+    });
 }
 
 /**
@@ -40,9 +42,9 @@ export async function _getWhitelistedContracts(web3, isTest) {
  * @returns contract
  */
 
-export async function getApprove(id, web3, weeks, amount, userAddress,  isTest) {
+export async function getApprove(id, web3, weeks, amount, userAddress, isTest) {
     let contract = new web3.eth.Contract(
-        PolicyBookFascade,
+        PolicyBookContractAbi,
         id
     );
     const bigNumberAmount = BigNumber(amount).times(BigNumber(10).pow(18)).toFixed();
@@ -74,7 +76,6 @@ export async function getApprove(id, web3, weeks, amount, userAddress,  isTest) 
 /**
  * async function
  * Policy Purchase
- * @param {Object} contract - instance of contract after buyPolicy method
  * @param {String} userAddress - user address (in ETH)
  * @param {Number} weeks - period of policy
  * @param {Number} amount - amount of policy
@@ -82,12 +83,21 @@ export async function getApprove(id, web3, weeks, amount, userAddress,  isTest) 
  * @returns policy purchase result
  */
 
-export async function policyPurchase (contract, userAddress, weeks, amount, referralAddress) {
+export async function policyPurchase (userAddress, weeks, amount, referralAddress = '0x0000000000000000000000000000000000000000') {
     const bigNumberAmount = BigNumber(amount).times(BigNumber(10).pow(18)).toFixed();
-    return contract.methods.buyPolicyFromDistributor(weeks, bigNumberAmount, referralAddress).send({from: userAddress}).then((res) => {
-        return res
+    let policyBookInstance = new web3.eth.Contract(
+        PolicyBook, CONTRACT_POLICY_BOOK_ADDRESS_TEST
+    );
+    policyBookInstance.methods.policyBookFacade().call().then(facadeId => {
+        let policyBookFacadeInstace = new web3.eth.Contract(
+            PolicyBookFascade, facadeId
+        );
+        return policyBookFacadeInstace.methods.buyPolicyFromDistributor(weeks, bigNumberAmount, referralAddress).send({from: userAddress}).then((res) => {
+            return res
+        })
     })
 }
+
 
 
 /**
