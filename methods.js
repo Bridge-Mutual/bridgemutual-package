@@ -95,7 +95,7 @@ export async function getApprove(id, web3, weeks, amount, userAddress, isTest) {
  * @returns policy purchase result
  */
 
-export async function policyPurchase (contract, policyId, userAddress, weeks, amount, referralAddress = '0x0000000000000000000000000000000000000000') {
+export async function policyPurchase (contract, userAddress, weeks, amount, referralAddress = '0x0000000000000000000000000000000000000000') {
     const bigNumberAmount = BigNumber(amount).times(BigNumber(10).pow(18)).toFixed();
     contract.methods.policyBookFacade().call().then(facadeId => {
         let policyBookFacadeInstace = new web3.eth.Contract(
