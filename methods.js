@@ -85,6 +85,35 @@ export async function getApprove(id, web3, weeks, amount, userAddress, isTest) {
     })
 }
 
+export async function getPolicyBookContractInstance(id, web3) {
+    let contract = new web3.eth.Contract(
+        PolicyBook,
+        id
+    );
+    return contract
+}
+
+export async function getBalance(userAddress, id, web3) {
+    let contract = new web3.eth.Contract(
+        PolicyBook,
+        id
+    );
+    return contract.methods.balanceOf(userAddress).call().then(balance => {
+        return balance;
+    })
+}
+
+export async function getPolicyPrice(userAddress, id, amount, weeks, web3) {
+    let contract = new web3.eth.Contract(
+        PolicyBook,
+        id
+    );
+    const bigNumberAmount = BigNumber(amount).times(BigNumber(10).pow(18)).toFixed();
+    return contract.methods.getPolicyPrice(weeks, bigNumberAmount, userAddress).call().then(res => {
+        return res
+    })
+}
+
 /**
  * async function
  * Policy Purchase
@@ -136,7 +165,11 @@ async function getUSDTContract(web3, isTest) {
  * @param {Number} amount - amount of coverage
  * @returns provide coverage result
  */
-export async function provideCoverage(contract, userAddress, amount) {
+export async function provideCoverage(id, userAddress, amount) {
+    let contract = new web3.eth.Contract(
+        PolicyBook,
+        id
+    );
     contract.methods.policyBookFacade().call().then(facadeId => {
         let policyBookFacadeInstace = new web3.eth.Contract(
             PolicyBookFascade, facadeId
@@ -190,35 +223,43 @@ export async function getCoverageApprove (id, web3, amount, userAddress, isTest)
 
 export async function getAllowance (web3, userAddress, id, isTest) {
     return getUSDTContract(web3, isTest).then(usdtContract => {
-        return usdtContract.methods.allowance(userAddress, id).call().then(allowance => {
-            return allowance;
-        })
+        return usdtContract.methods.allowance(userAddress, id).call()
     })
 }
 
 
-
 export async function resetAllowance (web3, userAddress, id, isTest) {
     return getUSDTContract(web3, isTest).then(usdtContract => {
-        return usdtContract.methods.allowance(userAddress, id).call().then(allowance => {
-            return usdtContract.methods.approve(id, BigNumber(0).idiv(10^12).toFixed()).send({from: userAddress}).then((result) => {
-                return result
-            })
-        })
+        return usdtContract.methods.approve(id, 0).send({from: userAddress}).then((res) => {return res})
     })
 }
 
 
 export async function setAllowance (web3, userAddress, id, amount, isTest) {
-    const bigNumberAmount = BigNumber(amount).times(BigNumber(10).pow(18)).toFixed();
+    const bigNumberAmount = BigNumber(amount).times(BigNumber(10).pow(6)).toFixed();
     return getUSDTContract(web3, isTest).then(usdtContract => {
-        return usdtContract.methods.allowance(userAddress, id).call().then(allowance => {
-            return usdtContract.methods.approve(id, BigNumber(bigNumberAmount).idiv(10^12).toFixed()).send({from: userAddress}).then((result) => {
-                return result
-            })
+        return usdtContract.methods.approve(id, bigNumberAmount).send({from: userAddress}).then((res) => {
+            return res;
         })
     })
 }
+
+export async function buyPolicy (id, web3, userAddress, weeks, amount, referralAddress = '0x0000000000000000000000000000000000000000') {
+    let contract = new web3.eth.Contract(
+        PolicyBook,
+        id
+    );
+    const bigNumberAmount = BigNumber(amount).times(BigNumber(10).pow(18)).toFixed();
+    contract.methods.policyBookFacade().call().then(facadeId => {
+        let policyBookFacadeInstace = new web3.eth.Contract(
+            PolicyBookFascade, facadeId
+        );
+        return policyBookFacadeInstace.methods.buyPolicyFromDistributor(weeks, bigNumberAmount, referralAddress).send({from: userAddress}).then((res) => {
+            return res
+        })
+    })
+}
+
 
 
 
