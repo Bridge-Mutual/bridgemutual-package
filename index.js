@@ -1,6 +1,5 @@
 import {
   _getWhitelistedContracts,
-  getApprove,
   policyPurchase,
   getPolicyPrice,
   buyPolicy,
@@ -16,7 +15,6 @@ export {
   _getWhitelistedContracts,
   getPolicyBookContractInstance,
   getPolicyPrice,
-  resetAllowance,
   resetAllowance,
   buyPolicy,
   policyPurchase,

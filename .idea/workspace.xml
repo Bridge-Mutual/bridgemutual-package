@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="582862fc-7141-4c28-87ef-9bc4c0df51a2" name="Default Changelist" comment="init commit">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/methods.js" beforeDir="false" afterPath="$PROJECT_DIR$/methods.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-    </list>
+    <list default="true" id="582862fc-7141-4c28-87ef-9bc4c0df51a2" name="Default Changelist" comment="init commit" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,10 +49,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="21" selection-start-line="21" selection-end-line="21" />
+            <state relative-caret-position="435">
+              <caret line="29" selection-start-line="29" selection-end-line="29" />
               <folding>
-                <element signature="e#0#200#0" expanded="true" />
+                <element signature="e#0#278#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -86,6 +82,7 @@
       <find>addLiquidityAndStake</find>
       <find>contract</find>
       <find>getPurchasedPolicies</find>
+      <find>6349a1f5415442c2817496e43b8f1205</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -97,8 +94,8 @@
         <option value="$PROJECT_DIR$/getPolicyList.js" />
         <option value="$PROJECT_DIR$/contartsABI/PolicyBookFascade.json" />
         <option value="$PROJECT_DIR$/README.md" />
-        <option value="$PROJECT_DIR$/index.js" />
         <option value="$PROJECT_DIR$/methods.js" />
+        <option value="$PROJECT_DIR$/index.js" />
         <option value="$PROJECT_DIR$/package.json" />
       </list>
     </option>
@@ -191,7 +188,7 @@
       <workItem from="1638451753227" duration="1510000" />
       <workItem from="1638524346143" duration="4658000" />
       <workItem from="1639406797910" duration="1822000" />
-      <workItem from="1639483289892" duration="2708000" />
+      <workItem from="1639483289892" duration="2943000" />
     </task>
     <task id="LOCAL-00001" summary="init commit">
       <created>1632140906069</created>
@@ -211,7 +208,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="43383000" />
+    <option name="totallyTimeSpent" value="43618000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
@@ -314,16 +311,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="21" selection-start-line="21" selection-end-line="21" />
-          <folding>
-            <element signature="e#0#200#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/contartsABI/ContractRegistry.json">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -333,6 +320,16 @@
           <caret line="290" selection-start-line="290" selection-end-line="290" />
           <folding>
             <element signature="e#0#68#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="435">
+          <caret line="29" selection-start-line="29" selection-end-line="29" />
+          <folding>
+            <element signature="e#0#278#0" expanded="true" />
           </folding>
         </state>
       </provider>
