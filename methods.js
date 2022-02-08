@@ -6,8 +6,8 @@ import ContractRegistry from './contartsABI/ContractRegistry.json'
 
 import PolicyRegistryAbi from './contartsABI/PolicyRegistry.json'
 import BigNumber from 'bignumber.js';
-const CONTRACT_REGISTRY_PROXY_ADDRESS_TEST = '0xdbD45F257581c0C9d7f34B66057c60920C426073';
-const CONTRACT_REGISTRY_PROXY_ADDRESS_MAIN = '0x88240185a74F020B94b14FAe3e6d5DdE1AA9057b';
+const CONTRACT_REGISTRY_PROXY_ADDRESS_TEST = '0x38DE74c5AC7D2A3bC81E566Ee318fdedB4a8E1F1';
+const CONTRACT_REGISTRY_PROXY_ADDRESS_MAIN = '0x45269F7e69EE636067835e0DfDd597214A1de6ea';
 /**
  * async function
  * Get whitelisted policy list
